@@ -1,3 +1,5 @@
+
+
 import './App.css';
 
 function App() {
@@ -8,17 +10,35 @@ function App() {
     numbers.push(i);
   }
 
+  // Function to determine if a cell should be blue
   const isBlueCell = (cell) => {
-    let num = 1; 
-    let step = 11; 
+    let num = 1;  // Start from 1
+    let step = 11; // Initial difference is 11
 
     while (num <= cells) {
-      if (num === cell) return true; 
-      num += step; 
+      if (num === cell) return true; // If matches, return true
+      num += step; // Increase by step
 
-      if (num >= 100 && num < 181) step = 9; 
+      // Adjust step based on cell number range
+      if (num > 100 && num <= 181) step = 9;  // Mid-range uses step 9
+      else if (num > 181) step = 11;  // Last range uses step 11
+    }
 
-      else if (num >= 181) step = 11; 
+    return false;
+  };
+
+  // Function to determine if a cell should be red
+  const isRedCell = (cell) => {
+    let num = 2;  // Start at 2 for red
+    let step = 11; // Initial difference is 11
+
+    while (num <= cells) {
+      if (num === cell) return true; // If matches, return true
+      num += step; // Increase by step
+
+      // Adjust step based on cell number range
+      if (num > 100 && num <= 181) step = 9;  // Mid-range uses step 9
+      else if (num > 181) step = 11;  // Last range uses step 11
     }
 
     return false;
@@ -29,7 +49,7 @@ function App() {
       {numbers.map((cell) => (
         <div 
           key={cell} 
-          className={`grid-cell ${isBlueCell(cell) ? 'blue-cell' : ''}`}
+          className={`grid-cell ${isBlueCell(cell) ? 'blue-cell' : ''} ${isRedCell(cell) ? 'red-cell' : ''}`}
         >
           {cell}
         </div>
@@ -39,3 +59,5 @@ function App() {
 }
 
 export default App;
+
+
